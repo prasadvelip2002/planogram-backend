@@ -6,7 +6,7 @@ using PlanogramBackend.Models;
 namespace PlanogramBackend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/planogram-layout")]
     public class PlanogramController(AppDbContext context) : ControllerBase
     {
         private readonly string[] allowedExtensions = [".jpg", ".jpeg", ".png", ".webp"];

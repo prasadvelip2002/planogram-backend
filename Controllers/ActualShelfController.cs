@@ -7,7 +7,7 @@ using PlanogramBackend.Models;
 namespace PlanogramBackend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/shelf-submissions")]
     public class ActualShelfController(AppDbContext context) : ControllerBase
     {
         [HttpPost]

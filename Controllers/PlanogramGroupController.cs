@@ -6,7 +6,7 @@ using PlanogramBackend.Models;
 namespace PlanogramBackend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/planogram-groups")]
 public class PlanogramGroupController : ControllerBase
 {
     private readonly AppDbContext _context;

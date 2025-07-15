@@ -6,7 +6,7 @@ using PlanogramBackend.Models;
 namespace PlanogramBackend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/product-images")]
 public class ProductImageController : ControllerBase
 {
     private readonly AppDbContext _context;
