@@ -1,0 +1,6 @@
+@PlanogramBackend_HostAddress = http://localhost:5272
+
+GET {{PlanogramBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

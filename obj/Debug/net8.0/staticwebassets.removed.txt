@@ -1,0 +1,5 @@
+C:\Users\prasad velip\source\repos\PlanogramBackend\PlanogramBackend\wwwroot\images\bodylotion
+C:\Users\prasad velip\source\repos\PlanogramBackend\PlanogramBackend\wwwroot\images\conditioner
+C:\Users\prasad velip\source\repos\PlanogramBackend\PlanogramBackend\wwwroot\images\face
+C:\Users\prasad velip\source\repos\PlanogramBackend\PlanogramBackend\wwwroot\images\shampoo
+C:\Users\prasad velip\source\repos\PlanogramBackend\PlanogramBackend\wwwroot\images\sun
