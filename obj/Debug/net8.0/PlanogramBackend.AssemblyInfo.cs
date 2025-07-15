@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlanogramBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20d5aa8488fe798cc6e2cb2a19a29f98f34935b9")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlanogramBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlanogramBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

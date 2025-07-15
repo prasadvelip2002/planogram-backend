@@ -1,5 +1,8 @@
-﻿namespace PlanogramBackend.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PlanogramBackend.Models
 {
+    [Table("actualshelfsubmissions")]  // 👈 matches the lowercase table in MySQL
     public class ActualShelfSubmission
     {
         public int Id { get; set; }

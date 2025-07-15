@@ -1,6 +1,0 @@
-wwwroot\images\bodylotion.jpeg
-wwwroot\images\conditioner.png
-wwwroot\images\face.jpeg
-wwwroot\images\moist.jpg
-wwwroot\images\shampoo.jpg
-wwwroot\images\sun.png
