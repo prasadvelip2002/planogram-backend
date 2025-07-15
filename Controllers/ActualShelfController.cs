@@ -8,13 +8,20 @@ namespace PlanogramBackend.Controllers
 {
     [ApiController]
     [Route("api/shelf-submissions")]
-    public class ActualShelfController(AppDbContext context) : ControllerBase
+    public class ActualShelfController : ControllerBase
     {
+        private readonly AppDbContext _context;
+
+        public ActualShelfController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         [HttpPost]
         public async Task<IActionResult> SubmitShelf([FromBody] ActualShelfSubmission submission)
         {
             var selectedUrls = JsonConvert.DeserializeObject<List<string>>(submission.SelectedImageUrls) ?? new();
-            var expectedUrls = await context.ProductImages.Select(p => p.ImageUrl).ToListAsync();
+            var expectedUrls = await _context.ProductImages.Select(p => p.ImageUrl).ToListAsync();
 
             int matchedCount = selectedUrls.Intersect(expectedUrls).Count();
             int totalCount = expectedUrls.Count;
@@ -31,8 +38,8 @@ namespace PlanogramBackend.Controllers
 
             submission.ComplianceScore = complianceScore;
             submission.SubmittedAt = DateTime.UtcNow;
-            context.ActualShelfSubmissions.Add(submission);
-            await context.SaveChangesAsync();
+            _context.ActualShelfSubmissions.Add(submission);
+            await _context.SaveChangesAsync();
 
             return Ok(new
             {
@@ -45,11 +52,10 @@ namespace PlanogramBackend.Controllers
             });
         }
 
-
         [HttpGet]
         public IActionResult GetSubmissions()
         {
-            var data = context.ActualShelfSubmissions
+            var data = _context.ActualShelfSubmissions
                 .OrderByDescending(s => s.SubmittedAt)
                 .Take(10)
                 .ToList();

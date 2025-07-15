@@ -7,18 +7,23 @@ namespace PlanogramBackend.Controllers
 {
     [ApiController]
     [Route("api/planogram-layout")]
-    public class PlanogramController(AppDbContext context) : ControllerBase
+    public class PlanogramController : ControllerBase
     {
+        private readonly AppDbContext _context;
         private readonly string[] allowedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
+
+        public PlanogramController(AppDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetPlanogram()
         {
-            var groups = await context.PlanogramGroups
+            var groups = await _context.PlanogramGroups
                 .Include(g => g.ProductImages)
                 .ToListAsync();
 
-            // ✅ Group by ShelfRow for row-wise rendering
             var groupedByRow = groups
                 .GroupBy(g => g.ShelfRow)
                 .OrderBy(g => g.Key)
@@ -32,12 +37,10 @@ namespace PlanogramBackend.Controllers
             return Ok(groupedByRow);
         }
 
-        // ✅ Automatically resolve file extension (if DB has no extension or wrong one)
         private string ResolveImageUrl(string filename)
         {
             var wwwRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
 
-            // If extension already exists in filename (e.g., 'moist.jpg'), check directly
             if (Path.HasExtension(filename))
             {
                 var fullPath = Path.Combine(wwwRootPath, filename);
@@ -45,7 +48,6 @@ namespace PlanogramBackend.Controllers
                     return "/images/" + filename;
             }
 
-            // Try all extensions
             foreach (var ext in allowedExtensions)
             {
                 var testPath = Path.Combine(wwwRootPath, filename + ext);
@@ -53,8 +55,7 @@ namespace PlanogramBackend.Controllers
                     return "/images/" + filename + ext;
             }
 
-            // Fallback image
-            return "/images/notfound.png"; // Optional: add a default 'notfound.png' in wwwroot/images
+            return "/images/notfound.png";
         }
     }
 }

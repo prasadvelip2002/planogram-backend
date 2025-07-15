@@ -3,43 +3,44 @@ using Microsoft.EntityFrameworkCore;
 using PlanogramBackend.Data;
 using PlanogramBackend.Models;
 
-namespace PlanogramBackend.Controllers;
-
-[ApiController]
-[Route("api/product-images")]
-public class ProductImageController : ControllerBase
+namespace PlanogramBackend.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public ProductImageController(AppDbContext context)
+    [ApiController]
+    [Route("api/product-images")]
+    public class ProductImageController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    [HttpPost]
-    public async Task<IActionResult> AddImage([FromBody] ProductImage image)
-    {
-        _context.ProductImages.Add(image);
-        await _context.SaveChangesAsync();
-        return Ok(image);
-    }
+        public ProductImageController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-    [HttpGet("{groupId}")]
-    public async Task<ActionResult<IEnumerable<ProductImage>>> GetImages(int groupId)
-    {
-        return await _context.ProductImages
-            .Where(img => img.PlanogramGroupId == groupId)
-            .ToListAsync();
-    }
+        [HttpPost]
+        public async Task<IActionResult> AddImage([FromBody] ProductImage image)
+        {
+            _context.ProductImages.Add(image);
+            await _context.SaveChangesAsync();
+            return Ok(image);
+        }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteImage(int id)
-    {
-        var image = await _context.ProductImages.FindAsync(id);
-        if (image == null) return NotFound();
+        [HttpGet("{groupId}")]
+        public async Task<ActionResult<IEnumerable<ProductImage>>> GetImages(int groupId)
+        {
+            return await _context.ProductImages
+                .Where(img => img.PlanogramGroupId == groupId)
+                .ToListAsync();
+        }
 
-        _context.ProductImages.Remove(image);
-        await _context.SaveChangesAsync();
-        return NoContent();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            var image = await _context.ProductImages.FindAsync(id);
+            if (image == null) return NotFound();
+
+            _context.ProductImages.Remove(image);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

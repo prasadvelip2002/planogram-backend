@@ -3,43 +3,44 @@ using Microsoft.EntityFrameworkCore;
 using PlanogramBackend.Data;
 using PlanogramBackend.Models;
 
-namespace PlanogramBackend.Controllers;
-
-[ApiController]
-[Route("api/planogram-groups")]
-public class PlanogramGroupController : ControllerBase
+namespace PlanogramBackend.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public PlanogramGroupController(AppDbContext context)
+    [ApiController]
+    [Route("api/planogram-groups")]
+    public class PlanogramGroupController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly AppDbContext _context;
 
-    [HttpPost]
-    public async Task<IActionResult> CreateGroup([FromBody] PlanogramGroup group)
-    {
-        _context.PlanogramGroups.Add(group);
-        await _context.SaveChangesAsync();
-        return Ok(group);
-    }
+        public PlanogramGroupController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<PlanogramGroup>>> GetGroups()
-    {
-        return await _context.PlanogramGroups
-            .Include(g => g.ProductImages)
-            .ToListAsync();
-    }
+        [HttpPost]
+        public async Task<IActionResult> CreateGroup([FromBody] PlanogramGroup group)
+        {
+            _context.PlanogramGroups.Add(group);
+            await _context.SaveChangesAsync();
+            return Ok(group);
+        }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteGroup(int id)
-    {
-        var group = await _context.PlanogramGroups.FindAsync(id);
-        if (group == null) return NotFound();
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PlanogramGroup>>> GetGroups()
+        {
+            return await _context.PlanogramGroups
+                .Include(g => g.ProductImages)
+                .ToListAsync();
+        }
 
-        _context.PlanogramGroups.Remove(group);
-        await _context.SaveChangesAsync();
-        return NoContent();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            var group = await _context.PlanogramGroups.FindAsync(id);
+            if (group == null) return NotFound();
+
+            _context.PlanogramGroups.Remove(group);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }
