@@ -1,17 +1,18 @@
-# Use the official .NET 8 SDK image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-
+# Use the official .NET SDK image to build the app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
+# Copy csproj and restore as distinct layers
 COPY . .
+RUN dotnet restore "PlanogramBackend.csproj"
 
-# Update the path below if your .csproj is inside a subfolder
-RUN dotnet restore "PlanogramBackend/PlanogramBackend.csproj"
-RUN dotnet publish "PlanogramBackend/PlanogramBackend.csproj" -c Release -o /app/publish
+# Build and publish the app
+RUN dotnet publish "PlanogramBackend.csproj" -c Release -o /app/publish
 
-FROM base AS final
+# Use the ASP.NET image for runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 COPY --from=build /app/publish .
+
+# Run the app
 ENTRYPOINT ["dotnet", "PlanogramBackend.dll"]
